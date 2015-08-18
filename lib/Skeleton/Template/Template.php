@@ -20,6 +20,14 @@ class Template {
 	private $translation = null;
 
 	/**
+	 * Template directory
+	 *
+	 * @access private
+	 * @var string $template_directory
+	 */
+	private $template_directory = null;
+
+	/**
 	 * Variables
 	 *
 	 * @access private
@@ -43,6 +51,16 @@ class Template {
 	 */
 	public function set_translation(\Skeleton\I18n\Translation $translation) {
 		$this->translation = $translation;
+	}
+
+	/**
+	 * Set template directory
+	 *
+	 * @access public
+	 * @param string $template_directory
+	 */
+	public function set_template_directory($template_directory) {
+		$this->template_directory = $template_directory;
 	}
 
 	/**
@@ -73,12 +91,12 @@ class Template {
 			default: throw new Exception('Unknown template type');
 		}
 
-		if (Config::$template_directory === null) {
-			throw new \Exception('No template directory set, please set Config::$template_directory');
+		if ($this->template_directory === null) {
+			throw new \Exception('No template directory set, please set $template->set_template_directory()');
 		}
 
 		// Set the template path
-		$renderer->set_template_directory(Config::$template_directory);
+		$renderer->set_template_directory($this->template_directory);
 
 		// Pass the variables to the template renderer
 		foreach ($this->variables as $key => $value) {
