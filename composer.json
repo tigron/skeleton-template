@@ -1,0 +1,19 @@
+{
+    "name": "tigron/skeleton-template",
+    "description": "Template library for skeleton",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tigron BVBA",
+            "email": "support@tigron.be"
+        }
+    ],
+    "support": {
+        "source": "https://github.com/tigron/skeleton-template",
+        "issues": "https://github.com/tigron/skeleton-template/issues"
+    },
+    "autoload": {
+        "psr-4": { "Skeleton\\Template\\": "lib/Skeleton/Template/" }
+    }
+}
