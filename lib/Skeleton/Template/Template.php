@@ -36,6 +36,14 @@ class Template {
 	protected $variables = [];
 
 	/**
+	 * Variables to add to the environment
+	 *
+	 * @access protected
+	 * @var array $environment
+	 */
+	protected $environment = [];
+
+	/**
 	 * Constructor
 	 *
 	 * @access public
@@ -75,6 +83,16 @@ class Template {
 	}
 
 	/**
+	 * Add an environment variable
+	 *
+	 * @param string $key
+	 * @param mixed $value
+	 */
+	public function add_environment($key, $value) {
+		$this->environment[$key] = $value;
+	}
+
+	/**
 	 * Render
 	 *
 	 * @access public
@@ -97,6 +115,13 @@ class Template {
 
 		// Set the template path
 		$renderer->set_template_directory($this->template_directory);
+
+		// Pass the environment variables to the template renderer
+		if (count($this->environment) > 0) {
+			foreach ($this->environment as $key => $value) {
+				$renderer->add_environment($key, $value);
+			}
+		}
 
 		// Pass the variables to the template renderer
 		foreach ($this->variables as $key => $value) {
