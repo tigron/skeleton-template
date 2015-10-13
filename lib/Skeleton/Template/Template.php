@@ -135,7 +135,7 @@ class Template {
 			try {
 				$translation = \Skeleton\I18n\Translation::Get(\Skeleton\Core\Application::Get()->language, \Skeleton\Core\Application::Get()->name);
 				$renderer->set_translation($translation);
-			} catch (Exception $e) { }
+			} catch (\Exception $e) { }
 		}
 
 		return $renderer->render($template);
