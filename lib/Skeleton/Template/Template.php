@@ -132,8 +132,10 @@ class Template {
 		if ($this->translation !== null) {
 			$renderer->set_translation($this->translation);
 		} else {
-			$translation = \Skeleton\I18n\Translation::Get(\Skeleton\Core\Application::Get()->language, \Skeleton\Core\Application::Get()->name);
-			$renderer->set_translation($translation);
+			try {
+				$translation = \Skeleton\I18n\Translation::Get(\Skeleton\Core\Application::Get()->language, \Skeleton\Core\Application::Get()->name);
+				$renderer->set_translation($translation);
+			} catch (Exception $e) { }
 		}
 
 		return $renderer->render($template);
