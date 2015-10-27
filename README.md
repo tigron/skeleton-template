@@ -28,6 +28,6 @@ Installation via composer:
 	$template->assign('my_variable_name2', 'content2');
 
 	// return the rendered template
-	$html = $template->display('test.twig');
+	$html = $template->render('test.twig');
 
 	// $html contains the rendered template
