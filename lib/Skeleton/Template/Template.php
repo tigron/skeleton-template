@@ -132,10 +132,14 @@ class Template {
 		if ($this->translation !== null) {
 			$renderer->set_translation($this->translation);
 		} else {
-			try {
-				$translation = \Skeleton\I18n\Translation::Get(\Skeleton\Core\Application::Get()->language, \Skeleton\Core\Application::Get()->name);
-				$renderer->set_translation($translation);
-			} catch (\Exception $e) { }
+			if (class_exists('\Skeleton\I18n\Translation') AND class_exists('Skeleton\Core\Application')) {
+				$language = \Skeleton\Core\Application::Get()->language;
+				$application_name = \Skeleton\Core\Application::Get()->name;
+				try {
+					$translation = \Skeleton\I18n\Translation::Get($language, $application_name);
+					$renderer->set_translation($translation);
+				} catch (\Exception $e) { }
+			}
 		}
 
 		return $renderer->render($template);
