@@ -120,7 +120,10 @@ class Template {
 			case 'twig':
 				$renderer = new \Skeleton\Template\Twig\Twig();
 				break;
-			default: throw new Exception('Unknown template type');
+			case 'tpl':
+				$renderer = new \Skeleton\Template\Smarty\Smarty();
+				break;
+			default: throw new \Exception('Unknown template type');
 		}
 
 		if (count($this->template_directories) == 0) {
