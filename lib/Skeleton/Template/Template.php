@@ -152,9 +152,9 @@ class Template {
 			$renderer->set_translation($this->translation);
 		} else {
 			if (class_exists('\Skeleton\I18n\Translation') AND class_exists('Skeleton\Core\Application')) {
-				$language = \Skeleton\Core\Application::Get()->language;
-				$application_name = \Skeleton\Core\Application::Get()->name;
 				try {
+					$language = \Skeleton\Core\Application::Get()->language;
+					$application_name = \Skeleton\Core\Application::Get()->name;
 					$translation = \Skeleton\I18n\Translation::Get($language, $application_name);
 					$renderer->set_translation($translation);
 				} catch (\Exception $e) { }
