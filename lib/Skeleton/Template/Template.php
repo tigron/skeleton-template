@@ -114,6 +114,10 @@ class Template {
 	 * @return string $html
 	 */
 	public function render($template) {
+		if (strpos($template, '.') === false) {
+			throw new \Exception('Please provide a valid template filename. Incorrect filename "' . $template . '"');
+		}
+
 		list($filename, $extension) = explode('.', basename($template));
 
 		switch ($extension) {
