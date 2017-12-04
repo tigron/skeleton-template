@@ -77,12 +77,19 @@ class Template {
 	 * @access public
 	 * @param string $template_directory
 	 * @param string $namespace (optional)
+	 * @param bool $prepend (optional)
 	 */
-	public function add_template_directory($template_directory, $namespace = null) {
-		$this->template_directories[] = [
+	public function add_template_directory($template_directory, $namespace = null, $prepend = false) {
+		$template_directory = [
 			'directory' => $template_directory,
 			'namespace' => $namespace
 		];
+
+		if ($prepend) {
+			array_unshift($this->template_directories, $template_directory);
+		} else {
+			array_push($this->template_directories, $template_directory);
+		}
 	}
 
 	/**
