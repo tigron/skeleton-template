@@ -2,6 +2,10 @@
     "name": "tigron/skeleton-template",
     "description": "Template library for skeleton",
     "type": "library",
+    "require": {
+        "php": ">=7.0.0",
+        "tigron/skeleton-template-twig": "*",
+    },
     "license": "MIT",
     "authors": [
         {
