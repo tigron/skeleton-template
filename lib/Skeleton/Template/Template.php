@@ -66,9 +66,11 @@ class Template {
 	 *
 	 * @access public
 	 * @param string $template_directory
+	 * @param string $namespace (optional)
+	 * @param bool $prepend (optional)	 
 	 */
-	public function set_template_directory($template_directory) {
-		$this->add_template_directory($template_directory);
+	public function set_template_directory($template_directory, $namespace = null, $prepend = false) {
+		$this->add_template_directory($template_directory, $namespace, $prepend);
 	}
 
 	/**
