@@ -67,7 +67,7 @@ class Template {
 	 * @access public
 	 * @param string $template_directory
 	 * @param string $namespace (optional)
-	 * @param bool $prepend (optional)	 
+	 * @param bool $prepend (optional)
 	 */
 	public function set_template_directory($template_directory, $namespace = null, $prepend = false) {
 		$this->add_template_directory($template_directory, $namespace, $prepend);
@@ -174,6 +174,16 @@ class Template {
 			}
 		}
 
-		return $renderer->render($template);
+		try {
+			return $renderer->render($template);
+		} catch (\Twig_Error_Loader $e) {
+			throw new Exception\Loader($e->getMessage());
+		} catch (\SmartyException $e) {
+			if (strpos($e->getMessage(), 'Unable to load') === 0) {
+				throw new Exception\Loader($e->getMessage());
+			} else {
+				throw new Exception($e->getMessage());
+			}
+		}
 	}
 }
