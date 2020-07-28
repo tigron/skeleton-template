@@ -178,6 +178,8 @@ class Template {
 			return $renderer->render($template);
 		} catch (\Twig_Error_Loader $e) {
 			throw new Exception\Loader($e->getMessage());
+		} catch (\Twig\Error\LoaderError $e) {
+			throw new Exception\Loader($e->getMessage());
 		} catch (\SmartyException $e) {
 			if (strpos($e->getMessage(), 'Unable to load') === 0) {
 				throw new Exception\Loader($e->getMessage());
