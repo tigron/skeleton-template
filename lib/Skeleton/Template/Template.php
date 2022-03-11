@@ -20,12 +20,12 @@ class Template {
 	private $translation = null;
 
 	/**
-	 * Template directories
+	 * Template template_paths
 	 *
 	 * @access private
-	 * @var array $template_directories
+	 * @var array $template_paths
 	 */
-	private $template_directories = [];
+	private $template_paths = [];
 
 	/**
 	 * Variables
@@ -64,6 +64,8 @@ class Template {
 	/**
 	 * Set template directory
 	 *
+	 * @Deprecated: use add_template_directory()
+	 *
 	 * @access public
 	 * @param string $template_directory
 	 * @param string $namespace (optional)
@@ -71,6 +73,27 @@ class Template {
 	 */
 	public function set_template_directory($template_directory, $namespace = null, $prepend = false) {
 		$this->add_template_directory($template_directory, $namespace, $prepend);
+	}
+
+	/**
+	 * Add template path
+	 *
+	 * @access public
+	 * @param string $template_path
+	 * @param string $namespace (optional)
+	 * @param bool $prepend (optional)
+	 */
+	public function add_template_path($template_path, $namespace = null, $prepend = false) {
+		$template_path = [
+			'directory' => $template_path,
+			'namespace' => $namespace
+		];
+
+		if ($prepend) {
+			array_unshift($this->template_paths, $template_path);
+		} else {
+			array_push($this->template_paths, $template_path);
+		}
 	}
 
 	/**
@@ -82,16 +105,10 @@ class Template {
 	 * @param bool $prepend (optional)
 	 */
 	public function add_template_directory($template_directory, $namespace = null, $prepend = false) {
-		$template_directory = [
-			'directory' => $template_directory,
-			'namespace' => $namespace
-		];
-
-		if ($prepend) {
-			array_unshift($this->template_directories, $template_directory);
-		} else {
-			array_push($this->template_directories, $template_directory);
-		}
+		/**
+		 * @Deprecated: this is for backwards compatibility
+		 */
+		$this->add_template_path($template_directory, $namespace, $prepend);
 	}
 
 	/**
@@ -139,13 +156,13 @@ class Template {
 			default: throw new \Exception('Unknown template type');
 		}
 
-		if (count($this->template_directories) == 0) {
-			throw new \Exception('No template directory set, please set $template->set_template_directory()');
+		if (count($this->template_paths) == 0) {
+			throw new \Exception('No template path set, please add a path via $template->add_template_path()');
 		}
 
 		// Set the template path
-		foreach ($this->template_directories as $template_directory) {
-			$renderer->add_template_directory($template_directory['directory'], $template_directory['namespace']);
+		foreach ($this->template_paths as $template_path) {
+			$renderer->add_template_path($template_path['directory'], $template_path['namespace']);
 		}
 
 		// Pass the environment variables to the template renderer

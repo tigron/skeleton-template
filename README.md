@@ -17,8 +17,8 @@ Installation via composer:
 	// Initialize a template object
 	$template = new \Skeleton\Template\Template();
 
-	// Set the template path
-	$template->set_template_directory($my_very_cool_path);
+	// Add a template path
+	$template->add_template_path($my_very_cool_path);
 
 	// Set a translation object (optional);
 	$template->set_translation(\Skeleton\I18n\Translation $translation);
