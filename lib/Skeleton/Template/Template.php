@@ -64,7 +64,7 @@ class Template {
 	/**
 	 * Set template directory
 	 *
-	 * @Deprecated: use add_template_directory()
+	 * @Deprecated: use add_template_path()
 	 *
 	 * @access public
 	 * @param string $template_directory
@@ -72,7 +72,7 @@ class Template {
 	 * @param bool $prepend (optional)
 	 */
 	public function set_template_directory($template_directory, $namespace = null, $prepend = false) {
-		$this->add_template_directory($template_directory, $namespace, $prepend);
+		$this->add_template_path($template_directory, $namespace, $prepend);
 	}
 
 	/**
@@ -85,7 +85,7 @@ class Template {
 	 */
 	public function add_template_path($template_path, $namespace = null, $prepend = false) {
 		$template_path = [
-			'directory' => $template_path,
+			'path' => $template_path,
 			'namespace' => $namespace
 		];
 
@@ -162,7 +162,7 @@ class Template {
 
 		// Set the template path
 		foreach ($this->template_paths as $template_path) {
-			$renderer->add_template_path($template_path['directory'], $template_path['namespace']);
+			$renderer->add_template_path($template_path['path'], $template_path['namespace']);
 		}
 
 		// Pass the environment variables to the template renderer
