@@ -144,7 +144,7 @@ class Template {
 			throw new \Exception('Please provide a valid template filename. Incorrect filename "' . $template . '"');
 		}
 
-		list($filename, $extension) = explode('.', basename($template));
+		$extension = pathinfo($template, PATHINFO_EXTENSION);
 
 		switch ($extension) {
 			case 'twig':
