@@ -62,6 +62,44 @@ class Template {
 	}
 
 	/**
+	 * Handle translation
+	 *
+	 * @access private
+	 * @param $renderer
+	 * @return $renderer
+	 */
+	public function handle_translation(&$renderer): void {
+		if ($this->translation !== null) {
+			$renderer->set_translation($this->translation);
+			return;
+		}
+
+		if (!class_exists('\Skeleton\I18n\Translation')) {
+			return;
+		}
+
+		if (!class_exists('\Skeleton\Core\Application')) {
+			return;
+		}
+		
+
+		try {
+			$application = \Skeleton\Core\Application::Get();
+		} catch (\Exception $e) {
+			return;
+		}
+		$language = $application->language;
+		if ($language === null) {
+			return;
+		}
+		$application_name = $application->name;
+		$translation = \Skeleton\I18n\Translation::Get($language, $application_name);
+		$renderer->set_translation($translation);
+		return;
+	}
+
+
+	/**
 	 * Set template directory
 	 *
 	 * @Deprecated: use add_template_path()
@@ -178,18 +216,7 @@ class Template {
 		}
 
 		// Set the translation object
-		if ($this->translation !== null) {
-			$renderer->set_translation($this->translation);
-		} else {
-			if (class_exists('\Skeleton\I18n\Translation') AND class_exists('Skeleton\Core\Application')) {
-				try {
-					$language = \Skeleton\Core\Application::Get()->language;
-					$application_name = \Skeleton\Core\Application::Get()->name;
-					$translation = \Skeleton\I18n\Translation::Get($language, $application_name);
-					$renderer->set_translation($translation);
-				} catch (\Exception $e) { }
-			}
-		}
+		$this->handle_translation($renderer);
 
 		try {
 			return $renderer->render($template);
