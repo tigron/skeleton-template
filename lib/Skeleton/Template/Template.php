@@ -62,44 +62,6 @@ class Template {
 	}
 
 	/**
-	 * Handle translation
-	 *
-	 * @access private
-	 * @param $renderer
-	 * @return $renderer
-	 */
-	public function handle_translation(&$renderer): void {
-		if ($this->translation !== null) {
-			$renderer->set_translation($this->translation);
-			return;
-		}
-
-		if (!class_exists('\Skeleton\I18n\Translation')) {
-			return;
-		}
-
-		if (!class_exists('\Skeleton\Core\Application')) {
-			return;
-		}
-		
-
-		try {
-			$application = \Skeleton\Core\Application::Get();
-		} catch (\Exception $e) {
-			return;
-		}
-		$language = $application->language;
-		if ($language === null) {
-			return;
-		}
-		$application_name = $application->name;
-		$translation = \Skeleton\I18n\Translation::Get($language, $application_name);
-		$renderer->set_translation($translation);
-		return;
-	}
-
-
-	/**
 	 * Set template directory
 	 *
 	 * @Deprecated: use add_template_path()
@@ -216,8 +178,11 @@ class Template {
 		}
 
 		// Set the translation object
-		$this->handle_translation($renderer);
+		if ($this->translation !== null) {
+			$renderer->set_translation($this->translation);
+		}
 
+		// Render
 		try {
 			return $renderer->render($template);
 		} catch (\Twig_Error_Loader $e) {
