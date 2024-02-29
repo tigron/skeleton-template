@@ -197,4 +197,30 @@ class Template {
 			}
 		}
 	}
+
+	/**
+	 * Validate
+	 *
+	 * @access public
+	 * @param string $template
+	 */
+	public function validate($template, &$error): bool {
+		if (strpos($template, '.') === false) {
+			throw new \Exception('Please provide a valid template filename. Incorrect filename "' . $template . '"');
+		}
+
+		$extension = pathinfo($template, PATHINFO_EXTENSION);
+
+		switch ($extension) {
+			case 'twig':
+				$validator = new \Skeleton\Template\Twig\Twig();
+				break;
+			case 'tpl':
+				$validator = new \Skeleton\Template\Smarty\Smarty();
+				break;
+			default: throw new \Exception('Unknown template type');
+		}
+
+		return $validator->validate($template, $error);
+	}
 }
