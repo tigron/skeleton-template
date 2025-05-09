@@ -35,7 +35,7 @@ class Template_Validate extends \Skeleton\Console\Command {
 	 * @param InputInterface $input
 	 * @param OutputInterface $output
 	 */
-	protected function execute(InputInterface $input, OutputInterface $output) {
+	protected function execute(InputInterface $input, OutputInterface $output): int {
 		$error_count = 0;
 		$error = '';
 		$root_path = getcwd();
